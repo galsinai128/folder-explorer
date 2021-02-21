@@ -1,24 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TreeNode from './components/TreeNode'
+
+import {entities} from './data'
+import {useState,useEffect} from 'react'
+
 
 function App() {
+
+  const [flieTree, setFlieTree] = useState<MyNode[]>([]);
+
+  useEffect(() => {
+    buildTree()
+  },[]);
+
+  function buildTree(){
+    let result: MyNode[] = [];
+    let level = {result};
+    entities.forEach(entitie=>{
+      let path = entitie.id.replace(/\s/g, ''); //remove spaces
+      path.split(':').reduce((r:any, name:string) => {
+        if(!r[name]) {
+          r[name] = {result: []};
+          r.result.push({name, children: r[name].result})
+        }
+        return r[name];
+      }, level)
+    })
+    setFlieTree(result)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Folder explorer</h1>
+      <TreeNode flieTree={flieTree}/>
     </div>
   );
 }
