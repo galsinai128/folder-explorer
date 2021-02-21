@@ -1,6 +1,6 @@
 ## folder explorer
 
-#intructions
+# intructions
 
 clone the prject and inside root folder:
 
@@ -8,6 +8,6 @@ clone the prject and inside root folder:
 
 - npm start
 
-#notes
+# notes
 
 - currently static data is inside: folder-explorer/src/data.tsx
